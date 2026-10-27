@@ -131,6 +131,15 @@ html[data-theme=light] .bn{background:#f4f4f5;color:#111}
 html[data-theme=light] .mq{background:linear-gradient(90deg,#fef2f2,#fee2e2,#fef2f2);border-color:#fecaca}
 html[data-theme=light] .mt span{color:#7f1d1d}
 html[data-theme=light] .mt a{color:var(--red)}
+.bk{border:0;background:#262626;color:#fff;width:34px;height:34px;border-radius:50%;font-size:20px;line-height:1;margin-right:10px}
+#gt{scroll-margin-top:84px}
+.pg{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:22px 14px 6px}
+.pg button{min-width:38px;height:38px;border-radius:6px;border:0;background:#262626;color:#fff;font:700 14px inherit}
+.pg button.a{background:var(--red)}
+.pg button[disabled]{opacity:.3}
+.pg span{align-self:center;color:var(--mut)}
+html[data-theme=light] .bk,html[data-theme=light] .pg button{background:#f4f4f5;color:#111}
+html[data-theme=light] .pg button.a{background:var(--red);color:#fff}
 </style>
 </head>
 <body>
@@ -161,7 +170,7 @@ const WEB_URL="https://harrykvip-tech.github.io/oakk-movie/"; // GitHub Pages �
 const SHEET_URL="https://docs.google.com/spreadsheets/d/151ojikbPb_EWiCJjCmO1StHxLxQ0TgUSwceoMpOpb8M/edit?usp=drivesdk";
 const CATS=[["all","✨ အားလုံး"],["favorites","❤️ မှတ်ထားသည်များ"],["popular","🔥 လူကြိုက်များ"],["Action","⚡ Action"],["Animation","🧸 ကာတွန်း"],["Hollywood","🎬 Hollywood"]];
 const PAGE=12;
-let all=[],cat="all",q="",shown=PAGE,cur=null,open=false,si=0,tm,favs=[];
+let all=[],cat="all",q="",shown=PAGE,cur=null,open=false,si=0,tm,favs=[],page=1,inSub=false,skip=false;
 try{favs=JSON.parse(localStorage.getItem("oakk_fav_movies")||"[]")}catch(e){}
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -211,26 +220,37 @@ const card=i=>{const m=all[i];return`<div class="card" onclick="openM(${i})"><di
 function chips(){
  $("chips").innerHTML=CATS.map(([k,n])=>`<button class="${k===cat?"a":""}" onclick="setCat('${k}')">${n}${k==="favorites"?`<em>${favs.length}</em>`:""}</button>`).join("");
 }
+const pageOf=l=>{const n=Math.max(1,Math.ceil(l.length/PAGE));if(page>n)page=n;return l.slice((page-1)*PAGE,page*PAGE)};
+function pager(total){
+ const n=Math.ceil(total/PAGE);if(n<=1)return"";
+ const a=[...new Set([1,n,page-1,page,page+1])].filter(x=>x>=1&&x<=n).sort((x,y)=>x-y);
+ let h=`<button ${page==1?"disabled":""} onclick="goPage(${page-1})">‹</button>`,p=0;
+ a.forEach(x=>{if(p&&x-p>1)h+="<span>…</span>";h+=`<button class="${x==page?"a":""}" onclick="goPage(${x})">${x}</button>`;p=x});
+ return`<div class="pg">${h}<button ${page==n?"disabled":""} onclick="goPage(${page+1})">›</button></div>`;
+}
+function toGrid(){const g=$("gt");if(g)g.scrollIntoView({behavior:"smooth"})}
+function goPage(n){page=n;render();toGrid()}
 function render(){
  chips();
  const home=cat==="all"&&!q;
  $("hero").innerHTML=home?'<div class="hs"><div class="ht" id="ht"></div><div class="dots" id="dots"></div></div>':"";
  if(home){heroInit();
-  const sec=(n,l,c)=>l.length?`<h2>${n}<small onclick="setCat('${c}')">အားလုံး ›</small></h2><div class="row">${l.slice(0,12).map(card).join("")}</div>`:"";
-  $("main").innerHTML=sec("အသစ်တင်ထားသော ဇာတ်ကားများ",byCat("all"),"all")?
-   `<h2>အသစ်တင်ထားသော ဇာတ်ကားများ</h2><div class="row">${byCat("all").slice(0,12).map(card).join("")}</div>`+
+  const sec=(n,l,c)=>l.length?`<h2>${n}<small onclick="${c==="all"?"toGrid()":`setCat('${c}')`}">အားလုံး ›</small></h2><div class="row">${l.slice(0,12).map(card).join("")}</div>`:"";
+  const rest=byCat("all").slice(12);
+  $("main").innerHTML=sec("အသစ်တင်ထားသော ဇာတ်ကားများ",byCat("all"),"all")+
    [["⚡ Action","Action"],["🧸 ကာတွန်း","Animation"],["🎬 Hollywood","Hollywood"],["🔥 လူကြိုက်များ","popular"]].map(([n,c])=>sec(n,byCat(c),c)).join("")+
-   `<h2>ဇာတ်ကားအားလုံး</h2><div class="grid">${byCat("all").slice(12,12+shown).map(card).join("")}</div>`+(all.length>12+shown?'<button class="more" onclick="shown+=PAGE;render()">ထပ်ကြည့်ရန် ⌄</button>':""):"";
+   (rest.length?`<h2 id="gt">ဇာတ်ကားအားလုံး</h2><div class="grid">${pageOf(rest).map(card).join("")}</div>`+pager(rest.length):"");
  }else{
   clearInterval(tm);
   const l=list(),t=q?`🔍 "${esc(q)}" ရလဒ်`:(CATS.find(c=>c[0]===cat)||[])[1];
-  $("main").innerHTML=`<h2>${t} <small style="color:var(--mut)">${l.length} ကား</small></h2><div class="grid">${l.length?l.slice(0,shown).map(card).join(""):`<div class="msg">${cat==="favorites"&&!q?"မှတ်သားထားသော ဇာတ်ကား မရှိသေးပါ။ ပိုစတာပေါ်က 🤍 ကိုနှိပ်၍ မှတ်သားနိုင်ပါသည်။":"ရှာဖွေထားသော ဇာတ်ကား မတွေ့ရှိပါ။"}</div>`}</div>`+(l.length>shown?'<button class="more" onclick="shown+=PAGE;render()">ထပ်ကြည့်ရန် ⌄</button>':"");
+  $("main").innerHTML=`<h2 id="gt"><span style="display:flex;align-items:center"><button class="bk" onclick="goHome()">‹</button>${t}</span><small>${l.length} ကား</small></h2><div class="grid">${l.length?pageOf(l).map(card).join(""):`<div class="msg">${cat==="favorites"&&!q?"မှတ်သားထားသော ဇာတ်ကား မရှိသေးပါ။ ပိုစတာပေါ်က 🤍 ကိုနှိပ်၍ မှတ်သားနိုင်ပါသည်။":"ရှာဖွေထားသော ဇာတ်ကား မတွေ့ရှိပါ။"}</div>`}</div>`+pager(l.length);
  }
 }
-function setCat(c){cat=c;shown=PAGE;render();scrollTo({top:0,behavior:"smooth"})}
-function goHome(){q="";$("si").value="";$("sb").classList.remove("on");setCat("all")}
+function pushSub(){if(!inSub){history.pushState({sub:1},"");inSub=true}}
+function setCat(c){cat=c;page=1;if(c==="all"&&!q){if(inSub){inSub=false;history.back()}else render()}else{pushSub();render()}scrollTo({top:0})}
+function goHome(){q="";$("si").value="";$("sb").classList.remove("on");cat="all";page=1;if(inSub){inSub=false;history.back()}else render();scrollTo({top:0})}
 function toggleSearch(){const s=$("sb");s.classList.toggle("on");if(s.classList.contains("on"))$("si").focus()}
-function onSearch(){q=$("si").value.trim().toLowerCase();shown=PAGE;render()}
+function onSearch(){q=$("si").value.trim().toLowerCase();page=1;if(q)pushSub();else if(cat==="all"&&inSub){inSub=false;history.back();return}render()}
 function clearSearch(){$("si").value="";onSearch()}
 
 /* ---------- hero (နောက်ဆုံးတင် ၅ ကား auto) ---------- */
@@ -259,8 +279,13 @@ function fav(i,e){
 
 /* ---------- sheets ---------- */
 function showSheet(h){$("dr").innerHTML=h;const b=$("bd");b.style.display="flex";setTimeout(()=>b.classList.add("show"),10);if(!open){history.pushState({s:1},"");open=true}}
-function closeSheet(){const b=$("bd");b.classList.remove("show");setTimeout(()=>b.style.display="none",200);if(open){open=false;history.back()}}
-addEventListener("popstate",()=>{if(open){open=false;const b=$("bd");b.classList.remove("show");setTimeout(()=>b.style.display="none",200)}});
+function closeSheet(){const b=$("bd");b.classList.remove("show");setTimeout(()=>b.style.display="none",200);if(open){open=false;skip=true;history.back()}}
+addEventListener("popstate",()=>{
+ if(skip){skip=false;return}
+ if(open){open=false;const b=$("bd");b.classList.remove("show");setTimeout(()=>b.style.display="none",200);return}
+ if(inSub){inSub=false;cat="all";q="";$("si").value="";$("sb").classList.remove("on");page=1;render();return}
+ render();
+});
 function openM(i){cur=i;sheetMovie(i)}
 function sheetMovie(i){
  const m=all[i];
