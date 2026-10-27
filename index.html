@@ -9,9 +9,9 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="OAK K">
-<title>OAK K Movies</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e50914'/%3E%3Cpath fill='%23fff' d='M27 24h14v21l24-21h19L56 50l30 26H66L41 54v22H27z'/%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-title" content="OAK">
+<title>OAK Movies</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Crect%20width=%22100%22%20height=%22100%22%20rx=%2222%22%20fill=%22%23e50914%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%226.5%22%3E%3Crect%20x=%2217.25%22%20y=%2231.25%22%20width=%2214.5%22%20height=%2227.5%22%20rx=%225%22/%3E%3Cpath%20d=%22M42%2062L50%2029L58%2062M45.5%2052H54.5%22/%3E%3Cpath%20d=%22M69%2029V61M84%2029L72%2046L85%2061%22/%3E%3C/g%3E%3Cpolygon%20points=%2242,70%2042,84%2058,76%22%20fill=%22%23000%22/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root{--red:#e50914;--fg:#fff;--mut:#a3a3a3;--card:#262626;--line:#222;color-scheme:dark}
@@ -120,11 +120,11 @@ html[data-theme=light] .bd{background:rgba(0,0,0,.5)}
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff2a36"/><stop offset="1" stop-color="#9b0610"/></linearGradient>
-<symbol id="ico" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="url(#g)"/><g fill="#000" opacity=".35"><rect x="10" y="8" width="8" height="6" rx="1.5"/><rect x="26" y="8" width="8" height="6" rx="1.5"/><rect x="42" y="8" width="8" height="6" rx="1.5"/><rect x="58" y="8" width="8" height="6" rx="1.5"/><rect x="74" y="8" width="8" height="6" rx="1.5"/><rect x="10" y="86" width="8" height="6" rx="1.5"/><rect x="26" y="86" width="8" height="6" rx="1.5"/><rect x="42" y="86" width="8" height="6" rx="1.5"/><rect x="58" y="86" width="8" height="6" rx="1.5"/><rect x="74" y="86" width="8" height="6" rx="1.5"/></g><path fill="#fff" d="M27 24h14v21l24-21h19L56 50l30 26H66L41 54v22H27z"/></symbol></defs></svg>
+<symbol id="ico" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#e50914"/><g fill="none" stroke="#fff" stroke-width="6.5"><rect x="17.25" y="31.25" width="14.5" height="27.5" rx="5"/><path d="M42 62L50 29L58 62M45.5 52H54.5"/><path d="M69 29V61M84 29L72 46L85 61"/></g><polygon points="42,70 42,84 58,76" fill="#000"/></symbol></defs></svg>
 
 <header>
  <div class="top">
-  <div class="wm" onclick="goHome()"><svg width="40" height="40"><use href="#ico"/></svg><div><div class="word">OAK K</div><div class="sub">MOVIES</div></div></div>
+  <div class="wm" onclick="goHome()"><svg width="40" height="40"><use href="#ico"/></svg><div><div class="word">OAK</div><div class="sub">MOVIES</div></div></div>
   <div style="display:flex;gap:8px"><button class="ib" id="inst" style="display:none;background:var(--red)" onclick="installApp()">📲</button><button class="ib" id="th" onclick="toggleTheme()">☀️</button><button class="ib" onclick="toggleSearch()">🔍</button><button class="ib" onclick="openGuide()">📖</button></div>
  </div>
  <div class="sb" id="sb"><input id="si" placeholder="ဇာတ်ကားရှာရန်..." oninput="onSearch()"><button onclick="clearSearch()">✕</button></div>
@@ -140,7 +140,7 @@ html[data-theme=light] .bd{background:rgba(0,0,0,.5)}
 <div class="toast" id="toast"></div>
 
 <script>
-const WEB_URL=""; // GitHub Pages လင့် (ဥပမာ https://username.github.io/oakk-movies/) – APK အတွက် မျှဝေလင့်ကို မှန်စေရန်
+const WEB_URL="https://harrykvip-tech.github.io/oakk-movie/"; // GitHub Pages လင့် (ဥပမာ https://username.github.io/oakk-movies/) – APK အတွက် မျှဝေလင့်ကို မှန်စေရန်
 const SHEET_URL="https://docs.google.com/spreadsheets/d/151ojikbPb_EWiCJjCmO1StHxLxQ0TgUSwceoMpOpb8M/edit?usp=drivesdk";
 const CATS=[["all","✨ အားလုံး"],["favorites","❤️ မှတ်ထားသည်များ"],["popular","🔥 လူကြိုက်များ"],["Action","⚡ Action"],["Animation","🧸 ကာတွန်း"],["Hollywood","🎬 Hollywood"]];
 const PAGE=12;
@@ -219,7 +219,7 @@ function clearSearch(){$("si").value="";onSearch()}
 /* ---------- hero (နောက်ဆုံးတင် ၅ ကား auto) ---------- */
 function heroInit(){
  const L=all.slice(0,5).map((m,i)=>[m,i]),ht=$("ht"),d=$("dots");
- ht.innerHTML=L.map(([m,i])=>`<div class="hero" style="background-image:url('${esc(m.poster).replace(/'/g,"%27")}')" onclick="openM(${i})"><div class="o">OAK K</div><h1>${esc(m.title)}</h1><div class="k">${m.year} · ${esc(m.genre)} · ${esc(m.quality)}</div><div class="btns"><b>▶ ကြည့်ရန်</b><b onclick="fav(${i},event)">${isFav(m.title)?"❤️ မှတ်ပြီး":"＋ မှတ်မည်"}</b></div></div>`).join("");
+ ht.innerHTML=L.map(([m,i])=>`<div class="hero" style="background-image:url('${esc(m.poster).replace(/'/g,"%27")}')" onclick="openM(${i})"><div class="o">OAK</div><h1>${esc(m.title)}</h1><div class="k">${m.year} · ${esc(m.genre)} · ${esc(m.quality)}</div><div class="btns"><b>▶ ကြည့်ရန်</b><b onclick="fav(${i},event)">${isFav(m.title)?"❤️ မှတ်ပြီး":"＋ မှတ်မည်"}</b></div></div>`).join("");
  d.innerHTML=L.map(()=>"<i></i>").join("");
  si=0;clearInterval(tm);
  const go=n=>{si=(n+L.length)%L.length;ht.style.transform=`translateX(-${si*100}%)`;[...d.children].forEach((e,k)=>e.classList.toggle("on",k===si))};
@@ -253,7 +253,7 @@ function sheetMovie(i){
  <div class="nt">💡 <b>သတိပေးချက်:</b> ကြည့်ရှုရန် သို့မဟုတ် ဒေါင်းလုဒ်ဆွဲရန် <b>TeraBox App</b> လိုအပ်ပါသည်။</div>`);
 }
 function share(i){
- const m=all[i],u=((location.hostname==="localhost"&&WEB_URL)?WEB_URL:location.origin+location.pathname)+"?movie="+encodeURIComponent(m.title),t=`🎬 ${m.title} (${m.year}) ဇာတ်ကားကို OAK K Movies တွင် ကြည့်ရှုနိုင်ပါပြီ!`;
+ const m=all[i],u=((location.hostname==="localhost"&&WEB_URL)?WEB_URL:location.origin+location.pathname)+"?movie="+encodeURIComponent(m.title),t=`🎬 ${m.title} (${m.year}) ဇာတ်ကားကို OAK Movies တွင် ကြည့်ရှုနိုင်ပါပြီ!`;
  if(navigator.share)navigator.share({title:m.title,text:t,url:u}).catch(()=>{});
  else navigator.clipboard.writeText(t+"\n"+u).then(()=>toast("🔗 လင့်ခ်ကူးယူပြီးပါပြီ")).catch(()=>toast("🔗 လင့်ခ်ကူးယူ၍ မရပါ"));
 }
