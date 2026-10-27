@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000" id="tc">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("oakk_theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="OAK K">
+<title>OAK K Movies</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e50914'/%3E%3Cpath fill='%23fff' d='M27 24h14v21l24-21h19L56 50l30 26H66L41 54v22H27z'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e50914;--fg:#fff;--mut:#a3a3a3;--card:#262626;--line:#222;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#000;color:#fff;font-family:'Noto Sans Myanmar',system-ui,sans-serif;padding-bottom:40px;padding-top:env(safe-area-inset-top,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#000;z-index:60}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(#000 40%,rgba(0,0,0,.75));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:10px 14px 6px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.wm{display:flex;align-items:center;gap:9px;cursor:pointer}
+.word{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:.85;letter-spacing:3px;color:var(--red)}
+.sub{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:7px;color:#fff}
+.ib{width:38px;height:38px;border-radius:50%;background:transparent;color:#fff;border:0;font-size:18px}
+.sb{display:none;margin-top:10px;position:relative}
+.sb.on{display:block}
+.sb input{width:100%;padding:11px 38px 11px 16px;border-radius:4px;border:1px solid #444;background:#262626;color:#fff;font:13px inherit;outline:0}
+.sb input:focus{border-color:#fff}
+.sb button{position:absolute;right:8px;top:8px;width:24px;height:24px;border-radius:50%;border:0;background:#555;color:#fff}
+.hs{margin:0;position:relative;overflow:hidden}
+.ht{display:flex;transition:transform .55s ease;touch-action:pan-y}
+.hero{flex:none;width:100%;height:470px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;padding:18px 18px 22px;color:#fff;background-size:cover;background-position:center top;background-color:#1a1a1a;cursor:pointer}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.35),transparent 25%,rgba(0,0,0,.55) 65%,#000)}
+.hero>*{position:relative}
+.hero .o{font-size:11px;letter-spacing:5px;color:var(--red);font-weight:900}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:50px;line-height:1;letter-spacing:2px;margin:2px 0 4px;text-shadow:0 2px 12px #000}
+.k{font-size:11px;color:#e5e5e5}
+.btns{display:flex;gap:10px;margin-top:14px;width:100%}
+.btns b{flex:1;padding:10px 0;border-radius:5px;font-size:14px;background:rgba(109,109,110,.75);text-align:center}
+.btns b:first-child{background:#fff;color:#000}
+.dots{position:absolute;bottom:6px;left:0;right:0;display:flex;gap:5px;justify-content:center}
+.dots i{width:6px;height:6px;border-radius:50%;background:#555;transition:.3s}
+.dots i.on{background:#fff}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none}
+.chips button{flex:none;padding:7px 14px;border-radius:20px;background:transparent;color:#fff;border:1px solid #666;font:700 12px inherit}
+.chips button.a{background:#fff;color:#000;border-color:#fff}
+.chips em{font-style:normal;background:var(--red);color:#fff;border-radius:9px;padding:0 6px;margin-left:4px}
+h2{font-size:17px;font-weight:700;padding:18px 14px 8px;display:flex;justify-content:space-between;align-items:baseline}
+h2 small{font-size:11px;color:var(--mut);font-weight:700;cursor:pointer}
+.row{display:flex;gap:6px;overflow-x:auto;padding:0 14px 4px;scrollbar-width:none}
+.row .card{flex:none;width:108px}
+.row .t,.row .m{display:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 6px;padding:0 14px}
+.card{cursor:pointer;min-width:0}
+.poster{aspect-ratio:2/3;border-radius:4px;position:relative;overflow:hidden;background:#262626}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.heart{position:absolute;top:4px;right:4px;font-size:11px;background:rgba(0,0,0,.55);border:0;border-radius:50%;width:24px;height:24px}
+.q{position:absolute;left:0;bottom:0;background:var(--red);color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:0 4px 0 0}
+.t{font-size:11px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e5e5e5}
+.m{font-size:10px;color:var(--mut)}
+.more{display:block;margin:18px auto;padding:11px 28px;border-radius:5px;border:0;background:#fff;color:#000;font:700 13px inherit}
+.msg{text-align:center;color:var(--mut);font-size:13px;padding:40px 20px;grid-column:1/-1}
+.ann{margin:22px 14px 0;padding:12px 14px;border-radius:6px;background:#141414;border-left:3px solid var(--red);font-size:11px;color:#d4d4d8;line-height:1.7}
+.ann a{color:#ff4d57;font-weight:700}
+.bd{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:none;align-items:flex-end;justify-content:center;opacity:0;transition:.2s}
+.bd.show{opacity:1}
+.dr{background:#181818;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-radius:14px 14px 0 0;padding:10px 16px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(30px);transition:.25s}
+.bd.show .dr{transform:none}
+.hd{width:42px;height:4px;border-radius:2px;background:#555;margin:0 auto 14px}
+.dh{display:flex;gap:14px}
+.dh img{width:100px;aspect-ratio:2/3;object-fit:cover;border-radius:4px;flex:none;background:#262626}
+.dh h3{font-size:18px;line-height:1.3}
+.bg{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.bg span{font-size:10px;background:#333;padding:3px 9px;border-radius:4px;font-weight:700}
+.bg span.h{background:var(--red)}
+.ab{display:flex;gap:6px;flex-wrap:wrap}
+.ab button{border:0;background:#333;color:#fff;border-radius:5px;padding:8px 12px;font:700 11px inherit}
+.ab button.f{background:#3b0d10;color:#ff6b73}
+.xx{margin-left:auto;align-self:flex-start;border:0;background:#333;color:#fff;width:32px;height:32px;border-radius:50%;flex:none}
+.ds{font-size:13px;color:#d4d4d8;margin:14px 0;line-height:1.7}
+.dl{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#222;border-radius:8px;padding:12px 14px}
+.dl a{background:#fff;color:#000;text-decoration:none;font-weight:700;font-size:12px;padding:10px 16px;border-radius:5px;white-space:nowrap}
+.nt{margin-top:12px;font-size:11px;background:#262626;padding:10px 12px;border-radius:8px;line-height:1.6;color:#d4d4d8}
+.gd p{font-size:13px;color:#d4d4d8;margin-top:10px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:#fff;color:#000;padding:10px 18px;border-radius:6px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:200;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+html[data-theme=light]{--fg:#111;--mut:#71717a;--card:#f4f4f5;--line:#e4e4e7;color-scheme:light}
+html[data-theme=light] body{background:#fff;color:#111}
+html[data-theme=light] body::before{background:#fff}
+html[data-theme=light] header{background:linear-gradient(#fff 40%,rgba(255,255,255,.88))}
+html[data-theme=light] .sub,html[data-theme=light] .ib{color:#111}
+html[data-theme=light] .sb input{background:#f4f4f5;border-color:#e4e4e7;color:#111}
+html[data-theme=light] .sb input:focus{border-color:#111}
+html[data-theme=light] .sb button{background:#d4d4d8;color:#111}
+html[data-theme=light] .hero::before{background:linear-gradient(rgba(0,0,0,.25),transparent 25%,rgba(0,0,0,.85))}
+html[data-theme=light] .chips button{color:#111;border-color:#d4d4d8}
+html[data-theme=light] .chips button.a{background:#111;color:#fff;border-color:#111}
+html[data-theme=light] .poster{background:#e4e4e7}
+html[data-theme=light] .t{color:#111}
+html[data-theme=light] .more{background:#111;color:#fff}
+html[data-theme=light] .ann{background:#fef2f2;color:#7f1d1d}
+html[data-theme=light] .ann a{color:var(--red)}
+html[data-theme=light] .dr{background:#fff}
+html[data-theme=light] .hd{background:#d4d4d8}
+html[data-theme=light] .dh img{background:#e4e4e7}
+html[data-theme=light] .bg span{background:#f4f4f5}
+html[data-theme=light] .bg span.h{background:var(--red);color:#fff}
+html[data-theme=light] .ab button{background:#f4f4f5;color:#111}
+html[data-theme=light] .ab button.f{background:#fef2f2;color:var(--red)}
+html[data-theme=light] .xx{background:#f4f4f5;color:#111}
+html[data-theme=light] .ds,html[data-theme=light] .gd p{color:#3f3f46}
+html[data-theme=light] .dl{background:#fef2f2}
+html[data-theme=light] .dl a{background:var(--red);color:#fff}
+html[data-theme=light] .nt{background:#f4f4f5;color:#3f3f46}
+html[data-theme=light] .toast{background:#111;color:#fff}
+html[data-theme=light] .bd{background:rgba(0,0,0,.5)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff2a36"/><stop offset="1" stop-color="#9b0610"/></linearGradient>
+<symbol id="ico" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="url(#g)"/><g fill="#000" opacity=".35"><rect x="10" y="8" width="8" height="6" rx="1.5"/><rect x="26" y="8" width="8" height="6" rx="1.5"/><rect x="42" y="8" width="8" height="6" rx="1.5"/><rect x="58" y="8" width="8" height="6" rx="1.5"/><rect x="74" y="8" width="8" height="6" rx="1.5"/><rect x="10" y="86" width="8" height="6" rx="1.5"/><rect x="26" y="86" width="8" height="6" rx="1.5"/><rect x="42" y="86" width="8" height="6" rx="1.5"/><rect x="58" y="86" width="8" height="6" rx="1.5"/><rect x="74" y="86" width="8" height="6" rx="1.5"/></g><path fill="#fff" d="M27 24h14v21l24-21h19L56 50l30 26H66L41 54v22H27z"/></symbol></defs></svg>
+
+<header>
+ <div class="top">
+  <div class="wm" onclick="goHome()"><svg width="40" height="40"><use href="#ico"/></svg><div><div class="word">OAK K</div><div class="sub">MOVIES</div></div></div>
+  <div style="display:flex;gap:8px"><button class="ib" id="inst" style="display:none;background:var(--red)" onclick="installApp()">📲</button><button class="ib" id="th" onclick="toggleTheme()">☀️</button><button class="ib" onclick="toggleSearch()">🔍</button><button class="ib" onclick="openGuide()">📖</button></div>
+ </div>
+ <div class="sb" id="sb"><input id="si" placeholder="ဇာတ်ကားရှာရန်..." oninput="onSearch()"><button onclick="clearSearch()">✕</button></div>
+</header>
+
+<div class="chips" id="chips" style="margin-top:10px"></div>
+<div id="hero"></div>
+<div id="main"><div class="msg">⏳ ဇာတ်ကားများ ရယူနေပါသည်...</div></div>
+
+<div class="ann">💎 လူကြီးမင်းတို့ရဲ့ Digital & Premium Accounts လိုအပ်ချက်မှန်သမျှကို OAK_K မှ အကောင်းဆုံး Quality၊ အပြည့်အဝ Warranty ဖြင့် တာဝန်ယူဝန်ဆောင်မှုပေးနေပါပြီ။ 📞 Viber (<a href="viber://chat?number=%2B959779984937">09779984937</a>) · ✈️ Telegram (<a href="https://t.me/Jocker_456" target="_blank" rel="noopener">@Jocker_456</a>)</div>
+
+<div class="bd" id="bd" onclick="closeSheet()"><div class="dr" id="dr" onclick="event.stopPropagation()"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const WEB_URL=""; // GitHub Pages လင့် (ဥပမာ https://username.github.io/oakk-movies/) – APK အတွက် မျှဝေလင့်ကို မှန်စေရန်
+const SHEET_URL="https://docs.google.com/spreadsheets/d/151ojikbPb_EWiCJjCmO1StHxLxQ0TgUSwceoMpOpb8M/edit?usp=drivesdk";
+const CATS=[["all","✨ အားလုံး"],["favorites","❤️ မှတ်ထားသည်များ"],["popular","🔥 လူကြိုက်များ"],["Action","⚡ Action"],["Animation","🧸 ကာတွန်း"],["Hollywood","🎬 Hollywood"]];
+const PAGE=12;
+let all=[],cat="all",q="",shown=PAGE,cur=null,open=false,si=0,tm,favs=[];
+try{favs=JSON.parse(localStorage.getItem("oakk_fav_movies")||"[]")}catch(e){}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ph=t=>"data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450"><rect width="300" height="450" fill="#e50914"/><text x="150" y="235" font-size="26" fill="#fff" text-anchor="middle" font-family="sans-serif">${esc((t||"OAK K").slice(0,16))}</text></svg>`);
+document.addEventListener("error",e=>{const i=e.target;if(i.tagName==="IMG"&&!i.dataset.f){i.dataset.f=1;i.src=ph(i.alt)}},true);
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+const isFav=t=>favs.includes(t);
+
+/* ---------- data ---------- */
+function loadData(){
+ const id=(SHEET_URL.match(/\/d\/([a-zA-Z0-9-_]+)/)||[])[1];if(!id)return;
+ const s=document.createElement("script");
+ s.src=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=responseHandler:handleSheetData`;
+ s.onerror=()=>$("main").innerHTML='<div class="msg">⚠️ ဇာတ်ကားစာရင်း ဆွဲယူရာတွင် အမှားရှိနေပါသည်။ အင်တာနက်လိုင်း သို့မဟုတ် လင့်ခ်ကို စစ်ဆေးပါ။</div>';
+ document.body.appendChild(s);
+}
+window.handleSheetData=function(j){
+ try{
+  const v=(c,i)=>c[i]&&c[i].v!=null?String(c[i].v).trim():"";
+  all=j.table.rows.map(r=>{const c=r.c,t=v(c,0)||"Movie",p=v(c,3);
+   return{title:t,year:parseInt(v(c,1))||2026,quality:v(c,2)||"720p",poster:p.startsWith("http")?p:ph(t),desc:v(c,4)||"ဇာတ်ကားအညွှန်း မရှိသေးပါ။",url:v(c,5),size:v(c,6)||"1.2 GB",genre:v(c,7)||"General"}
+  }).filter(m=>m.title.toLowerCase()!=="title").reverse();
+  if(!all.length){$("main").innerHTML='<div class="msg">🎬 ဇာတ်ကားစာရင်း မရှိသေးပါ။</div>';return}
+  render();
+  const s=new URLSearchParams(location.search).get("movie");
+  if(s){const i=all.findIndex(m=>m.title.toLowerCase()===s.toLowerCase());if(i>-1)openM(i)}
+ }catch(e){$("main").innerHTML='<div class="msg">⚠️ အချက်အလက်ဖတ်ယူရာတွင် အမှားအယွင်းရှိနေပါသည်။</div>'}
+};
+
+/* ---------- lists ---------- */
+function byCat(c){
+ if(c==="all")return all.map((m,i)=>i);
+ return all.map((m,i)=>i).filter(i=>{const m=all[i],g=m.genre.toLowerCase();
+  if(c==="favorites")return isFav(m.title);
+  if(c==="popular")return g.includes("popular")||g.includes("လူကြိုက်များ");
+  return g.includes(c.toLowerCase())});
+}
+function list(){
+ let l=byCat(cat);
+ if(cat!=="all"&&cat!=="favorites"&&cat!=="popular")l.sort((a,b)=>all[b].year-all[a].year);
+ if(q)l=l.filter(i=>{const m=all[i];return m.title.toLowerCase().includes(q)||m.genre.toLowerCase().includes(q)||String(m.year).includes(q)});
+ return l;
+}
+const card=i=>{const m=all[i];return`<div class="card" onclick="openM(${i})"><div class="poster"><img src="${esc(m.poster)}" alt="${esc(m.title)}" loading="lazy"><span class="q">${esc(m.quality)}</span><button class="heart" onclick="fav(${i},event)">${isFav(m.title)?"❤️":"🤍"}</button></div><div class="t">${esc(m.title)}</div><div class="m">${m.year} · ${esc(m.genre)}</div></div>`};
+
+/* ---------- render ---------- */
+function chips(){
+ $("chips").innerHTML=CATS.map(([k,n])=>`<button class="${k===cat?"a":""}" onclick="setCat('${k}')">${n}${k==="favorites"?`<em>${favs.length}</em>`:""}</button>`).join("");
+}
+function render(){
+ chips();
+ const home=cat==="all"&&!q;
+ $("hero").innerHTML=home?'<div class="hs"><div class="ht" id="ht"></div><div class="dots" id="dots"></div></div>':"";
+ if(home){heroInit();
+  const sec=(n,l,c)=>l.length?`<h2>${n}<small onclick="setCat('${c}')">အားလုံး ›</small></h2><div class="row">${l.slice(0,12).map(card).join("")}</div>`:"";
+  $("main").innerHTML=sec("အသစ်တင်ထားသော ဇာတ်ကားများ",byCat("all"),"all")?
+   `<h2>အသစ်တင်ထားသော ဇာတ်ကားများ</h2><div class="row">${byCat("all").slice(0,12).map(card).join("")}</div>`+
+   [["⚡ Action","Action"],["🧸 ကာတွန်း","Animation"],["🎬 Hollywood","Hollywood"],["🔥 လူကြိုက်များ","popular"]].map(([n,c])=>sec(n,byCat(c),c)).join("")+
+   `<h2>ဇာတ်ကားအားလုံး</h2><div class="grid">${byCat("all").slice(12,12+shown).map(card).join("")}</div>`+(all.length>12+shown?'<button class="more" onclick="shown+=PAGE;render()">ထပ်ကြည့်ရန် ⌄</button>':""):"";
+ }else{
+  clearInterval(tm);
+  const l=list(),t=q?`🔍 "${esc(q)}" ရလဒ်`:(CATS.find(c=>c[0]===cat)||[])[1];
+  $("main").innerHTML=`<h2>${t} <small style="color:var(--mut)">${l.length} ကား</small></h2><div class="grid">${l.length?l.slice(0,shown).map(card).join(""):`<div class="msg">${cat==="favorites"&&!q?"မှတ်သားထားသော ဇာတ်ကား မရှိသေးပါ။ ပိုစတာပေါ်က 🤍 ကိုနှိပ်၍ မှတ်သားနိုင်ပါသည်။":"ရှာဖွေထားသော ဇာတ်ကား မတွေ့ရှိပါ။"}</div>`}</div>`+(l.length>shown?'<button class="more" onclick="shown+=PAGE;render()">ထပ်ကြည့်ရန် ⌄</button>':"");
+ }
+}
+function setCat(c){cat=c;shown=PAGE;render();scrollTo({top:0,behavior:"smooth"})}
+function goHome(){q="";$("si").value="";$("sb").classList.remove("on");setCat("all")}
+function toggleSearch(){const s=$("sb");s.classList.toggle("on");if(s.classList.contains("on"))$("si").focus()}
+function onSearch(){q=$("si").value.trim().toLowerCase();shown=PAGE;render()}
+function clearSearch(){$("si").value="";onSearch()}
+
+/* ---------- hero (နောက်ဆုံးတင် ၅ ကား auto) ---------- */
+function heroInit(){
+ const L=all.slice(0,5).map((m,i)=>[m,i]),ht=$("ht"),d=$("dots");
+ ht.innerHTML=L.map(([m,i])=>`<div class="hero" style="background-image:url('${esc(m.poster).replace(/'/g,"%27")}')" onclick="openM(${i})"><div class="o">OAK K</div><h1>${esc(m.title)}</h1><div class="k">${m.year} · ${esc(m.genre)} · ${esc(m.quality)}</div><div class="btns"><b>▶ ကြည့်ရန်</b><b onclick="fav(${i},event)">${isFav(m.title)?"❤️ မှတ်ပြီး":"＋ မှတ်မည်"}</b></div></div>`).join("");
+ d.innerHTML=L.map(()=>"<i></i>").join("");
+ si=0;clearInterval(tm);
+ const go=n=>{si=(n+L.length)%L.length;ht.style.transform=`translateX(-${si*100}%)`;[...d.children].forEach((e,k)=>e.classList.toggle("on",k===si))};
+ const auto=()=>{clearInterval(tm);tm=setInterval(()=>go(si+1),4500)};
+ let x=null;
+ ht.addEventListener("touchstart",e=>{x=e.touches[0].clientX;clearInterval(tm)},{passive:true});
+ ht.addEventListener("touchend",e=>{if(x!==null){const dx=e.changedTouches[0].clientX-x;if(Math.abs(dx)>40)go(si+(dx<0?1:-1));x=null}auto()});
+ go(0);auto();
+}
+
+/* ---------- favorites ---------- */
+function fav(i,e){
+ if(e)e.stopPropagation();
+ const t=all[i].title,k=favs.indexOf(t);
+ if(k>-1){favs.splice(k,1);toast("💔 မှတ်ထားသည့်စာရင်းမှ ဖယ်ရှားလိုက်ပါပြီ")}else{favs.push(t);toast("❤️ မှတ်ထားသည့်စာရင်းသို့ ထည့်သွင်းပြီးပါပြီ")}
+ try{localStorage.setItem("oakk_fav_movies",JSON.stringify(favs))}catch(x){}
+ const y=scrollY;render();scrollTo(0,y);
+ if(cur===i&&open)sheetMovie(i);
+}
+
+/* ---------- sheets ---------- */
+function showSheet(h){$("dr").innerHTML=h;const b=$("bd");b.style.display="flex";setTimeout(()=>b.classList.add("show"),10);if(!open){history.pushState({s:1},"");open=true}}
+function closeSheet(){const b=$("bd");b.classList.remove("show");setTimeout(()=>b.style.display="none",200);if(open){open=false;history.back()}}
+addEventListener("popstate",()=>{if(open){open=false;const b=$("bd");b.classList.remove("show");setTimeout(()=>b.style.display="none",200)}});
+function openM(i){cur=i;sheetMovie(i)}
+function sheetMovie(i){
+ const m=all[i];
+ showSheet(`<div class="hd"></div><div class="dh"><img src="${esc(m.poster)}" alt="${esc(m.title)}"><div><h3>${esc(m.title)}</h3><div class="bg"><span class="h">${esc(m.quality)}</span><span>📅 ${m.year}</span><span>🎭 ${esc(m.genre)}</span><span>💾 ${esc(m.size)}</span></div><div class="ab"><button class="${isFav(m.title)?"f":""}" onclick="fav(${i})">${isFav(m.title)?"❤️ မှတ်ထားပြီး":"🤍 မှတ်ထားမည်"}</button><button onclick="share(${i})">🔗 မျှဝေမည်</button></div></div><button class="xx" onclick="closeSheet()">✕</button></div>
+ <p class="ds">${esc(m.desc)}</p>
+ ${m.url?`<div class="dl"><div><b style="font-size:13px;color:var(--red)">TeraBox Cloud (${esc(m.quality)})</b><div class="m">ဖိုင်အရွယ်အစား - ${esc(m.size)}</div></div><a href="${esc(m.url)}" target="_blank" rel="noopener">Download / Play</a></div>`:'<div class="msg" style="padding:12px">လင့်ခ် မရှိသေးပါ။</div>'}
+ <div class="nt">💡 <b>သတိပေးချက်:</b> ကြည့်ရှုရန် သို့မဟုတ် ဒေါင်းလုဒ်ဆွဲရန် <b>TeraBox App</b> လိုအပ်ပါသည်။</div>`);
+}
+function share(i){
+ const m=all[i],u=((location.hostname==="localhost"&&WEB_URL)?WEB_URL:location.origin+location.pathname)+"?movie="+encodeURIComponent(m.title),t=`🎬 ${m.title} (${m.year}) ဇာတ်ကားကို OAK K Movies တွင် ကြည့်ရှုနိုင်ပါပြီ!`;
+ if(navigator.share)navigator.share({title:m.title,text:t,url:u}).catch(()=>{});
+ else navigator.clipboard.writeText(t+"\n"+u).then(()=>toast("🔗 လင့်ခ်ကူးယူပြီးပါပြီ")).catch(()=>toast("🔗 လင့်ခ်ကူးယူ၍ မရပါ"));
+}
+function openGuide(){showSheet(`<div class="hd"></div><div class="dh"><h3>📖 ကြည့်ရှုနည်းလမ်းညွှန်</h3><button class="xx" onclick="closeSheet()">✕</button></div><div class="gd"><p>1️⃣ ဖုန်းတွင် <b>TeraBox App</b> မရှိသေးပါက Play Store / App Store မှ အင်စတောလုပ်ပါ။</p><p>2️⃣ ကြည့်ချင်သော ဇာတ်ကားပိုစတာကို နှိပ်ပါ။</p><p>3️⃣ ပေါ်လာသော <b>"Download / Play"</b> ခလုတ်ကို နှိပ်ပါ။</p><p>4️⃣ TeraBox App ထဲသို့ ရောက်သွားမည်ဖြစ်ပြီး အွန်လိုင်းမှ တိုက်ရိုက်ကြည့်နိုင်ပါပြီ။</p><p>5️⃣ <b>❤️ အသည်းပုံ</b> နှိပ်ထားပြီး <b>"မှတ်ထားသည်များ"</b> စာရင်းထဲတွင် ပြန်ရှာနိုင်ပါသည်။</p></div>`)}
+
+/* ---------- theme ---------- */
+function applyTheme(x){document.documentElement.dataset.theme=x;$("th").textContent=x==="light"?"🌙":"☀️";$("tc").content=x==="light"?"#ffffff":"#000000"}
+function toggleTheme(){const x=document.documentElement.dataset.theme==="light"?"dark":"light";applyTheme(x);try{localStorage.setItem("oakk_theme",x)}catch(e){}toast(x==="light"?"☀️ အဖြူရောင်":"🌙 အနက်ရောင်")}
+applyTheme(document.documentElement.dataset.theme||"dark");
+/* ---------- PWA / install ---------- */
+let dp=null;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("inst").style.display="block"});
+addEventListener("appinstalled",()=>{$("inst").style.display="none";toast("✅ App ထည့်သွင်းပြီးပါပြီ")});
+function installApp(){if(dp){dp.prompt();dp=null;$("inst").style.display="none"}}
+if(/iphone|ipad/i.test(navigator.userAgent)&&!navigator.standalone){$("inst").style.display="block";$("inst").onclick=()=>showSheet('<div class="hd"></div><div class="dh"><h3>📲 iPhone တွင် App ထည့်ရန်</h3><button class="xx" onclick="closeSheet()">✕</button></div><div class="gd"><p>1️⃣ Safari ဖြင့် ဖွင့်ပါ။</p><p>2️⃣ အောက်ခြေ <b>Share</b> ခလုတ်ကိုနှိပ်ပါ။</p><p>3️⃣ <b>"Add to Home Screen"</b> ကိုရွေးပါ။</p></div>')}
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)&&location.hostname!=="localhost")addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+chips();loadData();
+</script>
+</body>
+</html>
