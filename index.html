@@ -9,8 +9,8 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="OAK">
-<title>OAK Movies</title>
+<meta name="apple-mobile-web-app-title" content="OAK Movie">
+<title>OAK Movie</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Crect%20width=%22100%22%20height=%22100%22%20rx=%2222%22%20fill=%22%23e50914%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%226.5%22%3E%3Crect%20x=%2217.25%22%20y=%2231.25%22%20width=%2214.5%22%20height=%2227.5%22%20rx=%225%22/%3E%3Cpath%20d=%22M42%2062L50%2029L58%2062M45.5%2052H54.5%22/%3E%3Cpath%20d=%22M69%2029V61M84%2029L72%2046L85%2061%22/%3E%3C/g%3E%3Cpolygon%20points=%2242,70%2042,84%2058,76%22%20fill=%22%23000%22/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
@@ -121,6 +121,16 @@ html[data-theme=light] .bd{background:rgba(0,0,0,.5)}
 .bn button{border:0;border-radius:5px;padding:8px 14px;font:700 12px inherit;background:var(--red);color:#fff}
 .bn button.c{background:transparent;color:var(--mut);padding:4px 6px}
 html[data-theme=light] .bn{background:#f4f4f5;color:#111}
+.mq{overflow:hidden;white-space:nowrap;background:linear-gradient(90deg,#2a0508,#4a0a10,#2a0508);border-top:1px solid #5a0d14;border-bottom:1px solid #5a0d14;padding:9px 0}
+.mt{display:inline-block;padding-left:100%;animation:mq 34s linear infinite}
+.mt span{font-size:12px;color:#ffe4e6}
+.mt a{color:#fff;font-weight:700;text-decoration:none}
+.mq:active .mt{animation-play-state:paused}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@media (prefers-reduced-motion:reduce){.mq{overflow-x:auto}.mt{animation:none;padding-left:0}}
+html[data-theme=light] .mq{background:linear-gradient(90deg,#fef2f2,#fee2e2,#fef2f2);border-color:#fecaca}
+html[data-theme=light] .mt span{color:#7f1d1d}
+html[data-theme=light] .mt a{color:var(--red)}
 </style>
 </head>
 <body>
@@ -134,13 +144,14 @@ html[data-theme=light] .bn{background:#f4f4f5;color:#111}
  </div>
  <div class="sb" id="sb"><input id="si" placeholder="ဇာတ်ကားရှာရန်..." oninput="onSearch()"><button onclick="clearSearch()">✕</button></div>
 </header>
+<div class="mq"><div class="mt"><span>💎 လူကြီးမင်းတို့ရဲ့ Digital &amp; Premium Accounts လိုအပ်ချက်မှန်သမျှကို OAK_K မှ အကောင်းဆုံး Quality၊ အပြည့်အဝ Warranty ဖြင့် တာဝန်ယူ ဝန်ဆောင်မှုပေးနေပါပြီ။ &nbsp;📞 Viber <a href="viber://chat?number=%2B959779984937">09779984937</a> &nbsp;·&nbsp; ✈️ Telegram <a href="https://t.me/Jocker_456" target="_blank" rel="noopener">@Jocker_456</a></span></div></div>
 
 <div class="bn" id="bn" style="display:none"><b>📲 OAK Movies ကို App အဖြစ် ထည့်သွင်းပါ</b><button onclick="installApp()">ထည့်မည်</button><button class="c" onclick="closeBn()">✕</button></div>
 <div class="chips" id="chips" style="margin-top:10px"></div>
 <div id="hero"></div>
 <div id="main"><div class="msg">⏳ ဇာတ်ကားများ ရယူနေပါသည်...</div></div>
 
-<div class="ann">💎 လူကြီးမင်းတို့ရဲ့ Digital & Premium Accounts လိုအပ်ချက်မှန်သမျှကို OAK_K မှ အကောင်းဆုံး Quality၊ အပြည့်အဝ Warranty ဖြင့် တာဝန်ယူဝန်ဆောင်မှုပေးနေပါပြီ။ 📞 Viber (<a href="viber://chat?number=%2B959779984937">09779984937</a>) · ✈️ Telegram (<a href="https://t.me/Jocker_456" target="_blank" rel="noopener">@Jocker_456</a>)</div>
+
 
 <div class="bd" id="bd" onclick="closeSheet()"><div class="dr" id="dr" onclick="event.stopPropagation()"></div></div>
 <div class="toast" id="toast"></div>
