@@ -116,6 +116,11 @@ html[data-theme=light] .dl a{background:var(--red);color:#fff}
 html[data-theme=light] .nt{background:#f4f4f5;color:#3f3f46}
 html[data-theme=light] .toast{background:#111;color:#fff}
 html[data-theme=light] .bd{background:rgba(0,0,0,.5)}
+.bn{margin:8px 14px 0;padding:10px 12px;border-radius:8px;background:#1f1f1f;display:flex;align-items:center;gap:10px;font-size:12px}
+.bn b{flex:1;font-weight:700}
+.bn button{border:0;border-radius:5px;padding:8px 14px;font:700 12px inherit;background:var(--red);color:#fff}
+.bn button.c{background:transparent;color:var(--mut);padding:4px 6px}
+html[data-theme=light] .bn{background:#f4f4f5;color:#111}
 </style>
 </head>
 <body>
@@ -130,6 +135,7 @@ html[data-theme=light] .bd{background:rgba(0,0,0,.5)}
  <div class="sb" id="sb"><input id="si" placeholder="ဇာတ်ကားရှာရန်..." oninput="onSearch()"><button onclick="clearSearch()">✕</button></div>
 </header>
 
+<div class="bn" id="bn" style="display:none"><b>📲 OAK Movies ကို App အဖြစ် ထည့်သွင်းပါ</b><button onclick="installApp()">ထည့်မည်</button><button class="c" onclick="closeBn()">✕</button></div>
 <div class="chips" id="chips" style="margin-top:10px"></div>
 <div id="hero"></div>
 <div id="main"><div class="msg">⏳ ဇာတ်ကားများ ရယူနေပါသည်...</div></div>
@@ -265,10 +271,15 @@ function toggleTheme(){const x=document.documentElement.dataset.theme==="light"?
 applyTheme(document.documentElement.dataset.theme||"dark");
 /* ---------- PWA / install ---------- */
 let dp=null;
-addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("inst").style.display="block"});
-addEventListener("appinstalled",()=>{$("inst").style.display="none";toast("✅ App ထည့်သွင်းပြီးပါပြီ")});
-function installApp(){if(dp){dp.prompt();dp=null;$("inst").style.display="none"}}
-if(/iphone|ipad/i.test(navigator.userAgent)&&!navigator.standalone){$("inst").style.display="block";$("inst").onclick=()=>showSheet('<div class="hd"></div><div class="dh"><h3>📲 iPhone တွင် App ထည့်ရန်</h3><button class="xx" onclick="closeSheet()">✕</button></div><div class="gd"><p>1️⃣ Safari ဖြင့် ဖွင့်ပါ။</p><p>2️⃣ အောက်ခြေ <b>Share</b> ခလုတ်ကိုနှိပ်ပါ။</p><p>3️⃣ <b>"Add to Home Screen"</b> ကိုရွေးပါ။</p></div>')}
+const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true||location.hostname==="localhost";
+const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+function guide(){showSheet(`<div class="hd"></div><div class="dh"><h3>📲 App အဖြစ် ထည့်သွင်းရန်</h3><button class="xx" onclick="closeSheet()">✕</button></div><div class="gd">${ios?'<p>1️⃣ <b>Safari</b> ဖြင့် ဖွင့်ပါ။</p><p>2️⃣ အောက်ခြေ <b>Share</b> ခလုတ်ကို နှိပ်ပါ။</p><p>3️⃣ <b>"Add to Home Screen"</b> ကိုရွေးပါ။</p>':'<p>1️⃣ <b>Chrome</b> ဖြင့် ဖွင့်ပါ။</p><p>2️⃣ ညာထိပ်က <b>⋮</b> ကို နှိပ်ပါ။</p><p>3️⃣ <b>"Install app"</b> (သို့) <b>"Add to Home screen"</b> ကိုရွေးပါ။</p><p>4️⃣ <b>Install</b> ကို နှိပ်ပါ။</p>'}</div>`)}
+function installApp(){if(dp){dp.prompt();dp.userChoice.finally(()=>{dp=null})}else guide()}
+function hideInst(){$("inst").style.display="none";$("bn").style.display="none"}
+function closeBn(){$("bn").style.display="none";try{localStorage.setItem("oakk_bn","1")}catch(e){}}
+if(!standalone){$("inst").style.display="block";let d=null;try{d=localStorage.getItem("oakk_bn")}catch(e){}if(!d)$("bn").style.display="flex"}
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e});
+addEventListener("appinstalled",()=>{hideInst();toast("✅ App ထည့်သွင်းပြီးပါပြီ")});
 if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)&&location.hostname!=="localhost")addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 chips();loadData();
 </script>
